@@ -38,7 +38,6 @@ class Fractal(object):
 
         X = np.linspace(x_lim[0], x_lim[1], self.resolution[0], dtype=np.float_)
         Y = np.linspace(y_lim[1], y_lim[0], self.resolution[1], dtype=np.float_)
-        X = nd.lin
         if self.row_wise:
             for y in Y:
                 yield [(x, y) for x in X]
