@@ -95,7 +95,7 @@ class Server(Fractal):
         np.savez_compressed(name, self.M)
 
     def save(self, name):
-        cm = 'hsv' if self.color_map is None else self.color_map
+        cm = plt.cm.hsv if self.color_map is None else self.color_map
         norm = plt.Normalize(vmin=self.M.min(), vmax=self.M.max())
 
         # map the normalized data to colors
