@@ -29,6 +29,7 @@ class Fractal(object):
     def change(self, point, scale):
         self.point = point
         self.scale = scale
+        self.wh = [1.25 * self.scale, 1 * self.scale]
 
     def get_row_column(self):
         # Generate rows or columns of the C plane
@@ -84,11 +85,11 @@ class Server(Fractal):
         self.color_map = None
         plt.rcParams['figure.figsize'] = [10, 10]
 
-    def run(self, frac_type, chunk_size=2):
+    def run(self, frac_type, chunk_size=2, intpol='bilinear'):
         self.gen(frac_type, chunk_size)
         cm = 'hsv' if self.color_map is None else self.color_map
         plt.axis('off')
-        plt.imshow(self.M, cmap=cm)
+        plt.imshow(self.M, cmap=cm, interpolation=intpol)
 
     def export(self, name):
         np.savez_compressed(name, self.M)

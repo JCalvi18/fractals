@@ -41,9 +41,12 @@ class Artist_GUI(object):
     cm_ax = plt.axes([.13, 0, .04, .05])
     cm_ax.set_facecolor('#8cc7a1')
 
+    plot_ax = plt.axes([.05, 0, .04, .05])
+    plot_ax.set_facecolor('#8cc7a1')
+
     bplus = Button(plus_ax, '+', hovercolor='#8cc7a1')
     bcmap = Button(cm_ax, 'CM', hovercolor='#8cc7a1')
-
+    bplot = Button(plot_ax, 'P', hovercolor='#8cc7a1')
     
     # Define Color Bar
     color_map = cm.get_cmap('inferno')
@@ -67,9 +70,15 @@ class Artist_GUI(object):
     nrows = int(0)
 
     def __init__(self, name):
-        self.fr_name = name
+        with np.load('try1.npz') as f:
+            if len(f.files) == 1:
+                self.M = f[f.files[0]]
+            else:
+                self.M = [f[m] for m in f.files]
         self.bplus.on_clicked(lambda event: self.add_button())
         self.bcmap.on_clicked(lambda event: self.gen_cm())
+        self.bplot.on_clicked(lambda event: self.update_fr())
+        self.update_fr()
 
     def move_text(self, idx, inverse=False):
         if inverse:
@@ -205,8 +214,11 @@ class Artist_GUI(object):
             return
         cdit = {cname: [[x, colors[xi][ci], colors[xi][ci]] for xi, x in enumerate(anchors)] for ci, cname in
                 enumerate(['red', 'green', 'blue', 'alpha'])}
-        self.cm = LinearSegmentedColormap('na', cdit)
-        self.bar_ax.imshow(self.color_bar, aspect='auto', cmap=self.cm)
+        self.color_map = LinearSegmentedColormap('na', cdit)
+        self.bar_ax.imshow(self.color_bar, aspect='auto', cmap=self.color_map)
+
+    def update_fr(self):
+        self.frac_ax.imshow(self.M, cmap=self.color_map, aspect='equal', interpolation='bilinear')
 
 
 parser = argparse.ArgumentParser('Fractal Color Artist')
