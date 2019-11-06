@@ -1,9 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
 import os
 import mxnet as mx
 from mxnet import nd
 from time import time
+
+
+def hex2rgb(h):
+    v = tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+    return tuple(c/256 for c in reversed(v))
 
 
 class Fractal(object):
@@ -16,7 +22,7 @@ class Fractal(object):
         self.row_wise = row_wise
         self.debug = debug
         self.ctx = mx.gpu(device) if device >= 0 else mx.cpu(0)
-        self.M = np.zeros(resolution)
+        self.M = np.zeros(resolution, dtype=np.uint16)
         if not self.row_wise:
             self.M = self.M.T
 
@@ -71,9 +77,26 @@ class Fractal(object):
             print('Plane generation:{:0.3f}s'.format(time()-start_exec))
             print('Average chunk execution:{:0.3f}s'.format(chunk_time.mean()))
 
-class Fractal_GUI(Fractal):
+
+class Server(Fractal):
     def __init__(self, *args, **kwargs):
-        super(Fractal_GUI, self).__init__(*args, **kwargs)
+        super(Server, self).__init__(*args, **kwargs)
+        self.color_map = None
+        plt.rcParams['figure.figsize'] = [10, 10]
+
+    def run(self, frac_type, chunk_size=2):
+        self.gen(frac_type, chunk_size)
+        cm = 'hsv' if self.color_map is None else self.color_map
+        plt.axis('off')
+        plt.imshow(self.M, cmap=cm)
+
+    def export(self, name):
+        np.savez_compressed(name, self.M)
+
+
+class Explorer(Fractal):
+    def __init__(self, *args, **kwargs):
+        super(Explorer, self).__init__(*args, **kwargs)
         self.fig, self.ax = plt.subplots()
         self.mv = 4
         self.point_text = plt.text(0.02, .9, str('Point: '+str(self.point)), fontsize=14, transform=plt.gcf().transFigure)
@@ -108,12 +131,17 @@ class Fractal_GUI(Fractal):
 
         return 1
 
+    def gen_cm(self, hex_list, range_list):
+        if len(hex_list) != len(range_list):
+            return -1
+        colors = [hex2rgb(h) for h in hex_list]
+
     def show(self):
         self.ax.imshow(self.M, interpolation='nearest')
         plt.draw()
 
     def copy(self):
-        s = '"frac.change([{:0.5f}, {:0.5f}], {})"'.format(self.point[0], self.point[1], self.scale)
+        s = 'python gui.py --px {:0.5f} --py {:0.5f}'' --s {}'.format(self.point[0], self.point[1], self.scale)
         os.system('echo {} |xclip -selection c'.format(s))
 
 
