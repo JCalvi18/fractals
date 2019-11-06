@@ -36,8 +36,9 @@ class Fractal(object):
         x_lim = [self.point[0]-self.wh[0], self.point[0]+self.wh[0]]
         y_lim = [self.point[1]+self.wh[1], self.point[1]-self.wh[1]]
 
-        X = np.linspace(x_lim[0], x_lim[1], self.resolution[0], dtype='double')
-        Y = np.linspace(y_lim[1], y_lim[0], self.resolution[1], dtype='double')
+        X = np.linspace(x_lim[0], x_lim[1], self.resolution[0], dtype=np.float_)
+        Y = np.linspace(y_lim[1], y_lim[0], self.resolution[1], dtype=np.float_)
+        X = nd.lin
         if self.row_wise:
             for y in Y:
                 yield [(x, y) for x in X]
@@ -93,6 +94,18 @@ class Server(Fractal):
 
     def export(self, name):
         np.savez_compressed(name, self.M)
+
+    def save(self, name):
+        cm = 'hsv' if self.color_map is None else self.color_map
+        norm = plt.Normalize(vmin=self.M.min(), vmax=self.M.max())
+
+        # map the normalized data to colors
+        # image is now RGBA (512x512x4)
+        image = cm(norm(self.M))
+
+        # save the image
+        plt.imsave(name+'.jpg', image, dpi=1000)
+
 
 
 class Explorer(Fractal):
