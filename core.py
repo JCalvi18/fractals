@@ -169,15 +169,17 @@ class Explorer(Fractal):
 
 
 def mandelbrot(c, nrep):
+
     z = c.clone().zero_()
 
     M = torch.zeros(z.shape, dtype=torch.int16, device=ctx)
+    print(M.dtype, M.device, sep='->')
     for _ in range(nrep):
         z = z**2+c
         if all(z.abs() >= 2):
             break
         M += z.abs() < 2
-    print('Here3')
+    print(M.dtype, M.device, sep='->')
     if ctx.type == 'cuda':
         return M.cpu()
     else:
