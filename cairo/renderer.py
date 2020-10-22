@@ -19,16 +19,19 @@ class Renderer(Gtk.Window):
             if animate is not None:
                 self.animate_iter = animate  # This must be function or generator defined in the child
         else:
-            self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-            cr = cairo.Context(self.surface)
-            if animate is not None:
-                self.animate_iter = animate
-                self.animate(cr)
-            else:
+            #self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+            # cr = cairo.Context(self.surface)
+            # if animate is not None:
+            #     self.animate_iter = animate
+            #     self.animate(cr)
+            # else:
+            #     self.on_draw(None, cr)
+            #     self.surface.write_to_png('image.png')
+            #     cr.show_page()
+            # self.surface.finish()
+            with cairo.SVGSurface("vector_graph.svg", 200, 200) as surface:
+                cr = cairo.Context(surface)
                 self.on_draw(None, cr)
-                self.surface.write_to_png('image.png')
-                cr.show_page()
-            self.surface.finish()
 
     def init_ui(self):
         darea = Gtk.DrawingArea()

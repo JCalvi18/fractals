@@ -99,8 +99,8 @@ class proto(Renderer):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser('Name Here')
-    parser.add_argument('--w', type=int, default=500, help='Level of the triangle')
-    parser.add_argument('--h', type=int, default=500, help='Level of the triangle')
+    parser.add_argument('--w', type=int, default=700, help='Level of the triangle')
+    parser.add_argument('--h', type=int, default=700, help='Level of the triangle')
     parser.add_argument('--s', type=int, default=1, help='Initial Scale')
     parser.add_argument('--fr', type=int, default=300, help='Number of frames')
     parser.add_argument('--im', action='store_false', help='Use GTK window')

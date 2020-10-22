@@ -1,9 +1,11 @@
+import torch
+ctx = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import os
-import mxnet as mx
-from mxnet import nd
+
+
 from time import time
 
 
@@ -13,7 +15,7 @@ def hex2rgb(h):
 
 
 class Fractal(object):
-    def __init__(self, resolution, point, scale=1.875e-05, nrep=200, device=-1, row_wise=True, debug=False):
+    def __init__(self, resolution, point, scale=1.875e-05, nrep=200, row_wise=True, debug=False):
         self.resolution = resolution
         self.point = point
         self.scale = scale
@@ -21,10 +23,15 @@ class Fractal(object):
         self.nrep = nrep
         self.row_wise = row_wise
         self.debug = debug
-        self.ctx = mx.gpu(device) if device >= 0 else mx.cpu(0)
         self.M = np.zeros(resolution, dtype=np.uint16)
         if not self.row_wise:
             self.M = self.M.T
+
+        if ctx.type == 'cuda':
+            print(torch.cuda.get_device_name(0))
+            print('Memory Usage:')
+            print('Allocated:', round(torch.cuda.memory_allocated(0) / 1024 ** 3, 1), 'GB')
+            print('Cached:   ', round(torch.cuda.memory_cached(0) / 1024 ** 3, 1), 'GB')
 
     def change(self, point, scale):
         self.point = point
@@ -36,32 +43,35 @@ class Fractal(object):
         x_lim = [self.point[0]-self.wh[0], self.point[0]+self.wh[0]]
         y_lim = [self.point[1]+self.wh[1], self.point[1]-self.wh[1]]
 
-        X = np.linspace(x_lim[0], x_lim[1], self.resolution[0], dtype=np.float_)
-        Y = np.linspace(y_lim[1], y_lim[0], self.resolution[1], dtype=np.float_)
+        X = torch.linspace(x_lim[0], x_lim[1], self.resolution[0], dtype=torch.complex128)
+        Y = torch.linspace(y_lim[1], y_lim[0], self.resolution[1], dtype=torch.complex128)*1j
         if self.row_wise:
             for y in Y:
-                yield [(x, y) for x in X]
+                yield X+y
         else:
-            for x in Y:
-                yield [(x, y) for y in Y]
+            for x in X:
+                yield x+Y
 
     def gen(self, frac_type, chunk_size=2):
         cs = chunk_size
-        chunk = []
+        chunk = None  # Tensor Pointer
         slices = []
         start_exec = time()
         chunk_time = np.array([])
         for i, r in enumerate(self.get_row_column()):
-            chunk += r
+            if chunk is None:
+                chunk = r
+            else:
+                chunk = torch.cat((chunk, r))
             slices.append(slice((cs-1)*len(r), cs*len(r)))
             cs -= 1
             if cs:
                 continue
-            in_points = nd.array(chunk, ctx=self.ctx).T  # Points to evaluate
-            init_vals = nd.zeros((3, in_points.shape[1]), ctx=self.ctx)  # initial values of r, im and it
+            in_points = chunk.to(ctx)  # Points to evaluate
+
             # Operations performed in GPU
             start_chunk = time()
-            out_stream = frac_type(in_points, init_vals, self.nrep).asnumpy()
+            out_stream = frac_type(in_points, self.nrep).numpy()
             if len(slices) > 1:
                 slices.reverse()
                 for j, s in zip(range((i+1)-chunk_size, i+1), slices):
@@ -72,7 +82,8 @@ class Fractal(object):
 
             cs = chunk_size
             slices = []
-            chunk = []
+            del chunk
+            chunk = None
 
         if self.debug:
             print('Plane generation:{:0.3f}s'.format(time()-start_exec))
@@ -158,18 +169,16 @@ class Explorer(Fractal):
         os.system('echo {} |xclip -selection c'.format(s))
 
 
-def mandelbrot(points, init, nrep):
-    x, y = points
-    r, im, it = init
+def mandelbrot(c: torch.Tensor, nrep):
+
+    z = c.clone().zero_()
+    M = torch.zeros(z.shape, dtype=torch.int16)
     for _ in range(nrep):
-        mag = r**2 + im**2
-        aux = r**2 - im**2 + x
-        im = 2*r*im + y
-        r = aux
-        if all(mag >= 4):
+        z = z**2+c
+        if all(z.abs() >= 2):
             break
-        it += mag < 4
-    return it
+        M += z.abs() < 2
+    return M
 
 
 def event_handler(event, frac):
