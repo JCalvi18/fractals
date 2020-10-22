@@ -69,7 +69,13 @@ class Fractal(object):
 
             # Operations performed in GPU
             start_chunk = time()
-            out_stream = frac_type(in_points, self.nrep).cpu().numpy()
+            out_stream = frac_type(in_points, self.nrep)
+            print(out_stream.dtype)
+            print(out_stream.device)
+            if ctx.type == 'cuda':
+                out_stream = out_stream.cpu()
+            out_stream = out_stream.numpy()
+            print(out_stream.dtype)
             if len(slices) > 1:
                 slices.reverse()
                 for j, s in zip(range((i+1)-chunk_size, i+1), slices):
