@@ -69,6 +69,7 @@ class Fractal(object):
 
             # Operations performed in GPU
             start_chunk = time()
+            print(in_points.dtype, in_points.device, sep='->')
             out_stream = frac_type(in_points, self.nrep)
             print(out_stream.dtype)
             if len(slices) > 1:
