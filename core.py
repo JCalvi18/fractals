@@ -28,10 +28,8 @@ class Fractal(object):
             self.M = self.M.T
 
         if ctx.type == 'cuda':
-            print(torch.cuda.get_device_name(0))
-            print('Memory Usage:')
-            print('Allocated:', round(torch.cuda.memory_allocated(0) / 1024 ** 3, 1), 'GB')
-            print('Cached:   ', round(torch.cuda.memory_cached(0) / 1024 ** 3, 1), 'GB')
+            print('Using %s' % torch.cuda.get_device_name(0))
+
 
     def change(self, point, scale):
         self.point = point
