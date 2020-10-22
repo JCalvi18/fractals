@@ -172,7 +172,8 @@ class Explorer(Fractal):
 def mandelbrot(c: torch.Tensor, nrep):
 
     z = c.clone().zero_()
-    M = torch.zeros(z.shape, dtype=torch.int16)
+
+    M = torch.zeros(z.shape, dtype=torch.int16, device=ctx)
     for _ in range(nrep):
         z = z**2+c
         if all(z.abs() >= 2):
@@ -183,7 +184,7 @@ def mandelbrot(c: torch.Tensor, nrep):
 
 def event_handler(event, frac):
     if frac.event_update(event):
-        frac.gen(mandelbrot)
+        frac.gen(mandelbrot, chunk_size=500)
         frac.show()
     else:
         plt.close()

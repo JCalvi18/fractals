@@ -12,7 +12,7 @@ parser.add_argument('--d', action='store_true', help='Flag to debug')
 args = parser.parse_args()
 
 
-frac = Explorer(resolution=[args.r]*2, point=[args.px, args.py], scale=args.s, nrep=args.n, debug=args.d)
+frac = Explorer(resolution=[args.r]*2, point=[args.px, args.py], scale=args.s, nrep=args.n, debug=args.d, )
 cid = frac.fig.canvas.mpl_connect('key_press_event', lambda event: event_handler(event, frac))
 
 
