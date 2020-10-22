@@ -66,11 +66,11 @@ class Fractal(object):
             if cs:
                 continue
             # in_points = chunk.to(ctx)  # Points to evaluate
-            in_points = chunk.cuda(ctx)
+
             # Operations performed in GPU
             start_chunk = time()
             print(chunk.cpu())
-            out_stream = frac_type(in_points, self.nrep)
+            out_stream = frac_type(chunk, self.nrep)
             print(out_stream.dtype)
             if len(slices) > 1:
                 slices.reverse()
