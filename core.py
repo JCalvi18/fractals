@@ -71,7 +71,6 @@ class Fractal(object):
             # Operations performed in GPU
             start_chunk = time()
             out_stream = frac_type(in_points, self.nrep)
-            print(out_stream.dtype)
             if len(slices) > 1:
                 slices.reverse()
                 for j, s in zip(range((i+1)-chunk_size, i+1), slices):
@@ -174,7 +173,6 @@ def mandelbrot(c, nrep):
     z = c.clone().zero_()
 
     M = torch.zeros(z.shape, dtype=torch.int16, device=ctx)
-    print(M.dtype, M.device, sep='->')
     for _ in range(nrep):
         z = z**2+c
         if all(z.abs() >= 2):
