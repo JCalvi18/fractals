@@ -72,8 +72,6 @@ class Fractal(object):
             out_stream = frac_type(in_points, self.nrep)
             print(out_stream.dtype)
             print(out_stream.device)
-            if ctx.type == 'cuda':
-                out_stream = out_stream.cpu()
             out_stream = out_stream.numpy()
             print(out_stream.dtype)
             if len(slices) > 1:
@@ -183,7 +181,10 @@ def mandelbrot(c: torch.Tensor, nrep):
         if all(z.abs() >= 2):
             break
         M += z.abs() < 2
-    return M
+    if ctx.type == 'cuda':
+        return M.cpu()
+    else:
+        return M
 
 
 def event_handler(event, frac):
