@@ -69,8 +69,7 @@ class Fractal(object):
 
             # Operations performed in GPU
             start_chunk = time()
-            out_stream = frac_type(in_points, self.nrep)
-            out_stream = out_stream.numpy()
+            out_stream = frac_type(in_points, self.nrep).numpy()
             print(out_stream.dtype)
             if len(slices) > 1:
                 slices.reverse()
@@ -169,12 +168,10 @@ class Explorer(Fractal):
         os.system('echo {} |xclip -selection c'.format(s))
 
 
-def mandelbrot(c: torch.Tensor, nrep):
-    print('Here')
+def mandelbrot(c, nrep):
     z = c.clone().zero_()
 
     M = torch.zeros(z.shape, dtype=torch.int16, device=ctx)
-    print('Here2')
     for _ in range(nrep):
         z = z**2+c
         if all(z.abs() >= 2):
