@@ -70,8 +70,6 @@ class Fractal(object):
             # Operations performed in GPU
             start_chunk = time()
             out_stream = frac_type(in_points, self.nrep)
-            print(out_stream.dtype)
-            print(out_stream.device)
             out_stream = out_stream.numpy()
             print(out_stream.dtype)
             if len(slices) > 1:
@@ -172,15 +170,17 @@ class Explorer(Fractal):
 
 
 def mandelbrot(c: torch.Tensor, nrep):
-
+    print('Here')
     z = c.clone().zero_()
 
     M = torch.zeros(z.shape, dtype=torch.int16, device=ctx)
+    print('Here2')
     for _ in range(nrep):
         z = z**2+c
         if all(z.abs() >= 2):
             break
         M += z.abs() < 2
+    print('Here3')
     if ctx.type == 'cuda':
         return M.cpu()
     else:
