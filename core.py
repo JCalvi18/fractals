@@ -65,8 +65,8 @@ class Fractal(object):
             cs -= 1
             if cs:
                 continue
-            in_points = chunk.to(ctx)  # Points to evaluate
-
+            # in_points = chunk.to(ctx)  # Points to evaluate
+            in_points = chunk.cuda(ctx)
             # Operations performed in GPU
             start_chunk = time()
             print(in_points.dtype, in_points.device, sep='->')
