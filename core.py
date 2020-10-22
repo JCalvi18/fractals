@@ -69,7 +69,7 @@ class Fractal(object):
             in_points = chunk.cuda(ctx)
             # Operations performed in GPU
             start_chunk = time()
-            print(chunk)
+            print(chunk.cpu())
             out_stream = frac_type(in_points, self.nrep)
             print(out_stream.dtype)
             if len(slices) > 1:
