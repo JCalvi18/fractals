@@ -67,10 +67,10 @@ class Fractal(object):
                 continue
             # in_points = chunk.to(ctx)  # Points to evaluate
 
+            in_points = chunk.cuda(ctx) if ctx.type == 'cuda' else chunk
             # Operations performed in GPU
             start_chunk = time()
-            print(chunk.cpu())
-            out_stream = frac_type(chunk, self.nrep)
+            out_stream = frac_type(in_points, self.nrep)
             print(out_stream.dtype)
             if len(slices) > 1:
                 slices.reverse()
@@ -179,8 +179,10 @@ def mandelbrot(c, nrep):
         z = z**2+c
         if all(z.abs() >= 2):
             break
+        a = z.abs() < 2
+        print(a.device)
         M += z.abs() < 2
-    print(M.dtype, M.device, sep='->')
+
     if ctx.type == 'cuda':
         return M.cpu()
     else:
