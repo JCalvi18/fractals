@@ -177,8 +177,6 @@ def mandelbrot(c, nrep):
         z = z**2+c
         if all(z.abs() >= 2):
             break
-        print('Z on device %s' % z.device)
-        a = z.abs() < 2
         M += z.abs() < 2
 
     if ctx.type == 'cuda':
