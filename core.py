@@ -83,6 +83,7 @@ class Fractal(object):
 
             cs = chunk_size
             slices = []
+            del in_points
             del chunk
             chunk = None
 
