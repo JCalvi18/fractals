@@ -31,7 +31,7 @@ class Fractal(object):
             print('Using %s' % torch.cuda.get_device_name(0))
 
 
-    def change(self, point, scalem, nrep=None):
+    def change(self, point, scale, nrep=None):
         self.point = point
         self.scale = scale
         if nrep is not None:
