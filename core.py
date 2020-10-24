@@ -31,9 +31,11 @@ class Fractal(object):
             print('Using %s' % torch.cuda.get_device_name(0))
 
 
-    def change(self, point, scale):
+    def change(self, point, scalem, nrep=None):
         self.point = point
         self.scale = scale
+        if nrep is not None:
+            self.nrep = nrep
         self.wh = [1.25 * self.scale, 1 * self.scale]
 
     def get_row_column(self):
