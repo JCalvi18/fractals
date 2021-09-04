@@ -12,7 +12,7 @@ class Artist_GUI(object):
      'axes.spines.left':False,
      'axes.spines.right':False,
      'axes.spines.top':False,
-     'axes.spines.bottom':False,  
+     'axes.spines.bottom':False,
      'ytick.left':False,
      'ytick.right':False,
      'xtick.bottom':False,
@@ -22,17 +22,17 @@ class Artist_GUI(object):
     plt.rcParams.update(params)
 
     fig = plt.Figure()
-    
+
     #Three main part of the GUI
     frac_ax=plt.axes([.3, 0, .7, 1])
     bar_ax=plt.axes([.2, 0, .1, 1])
     row_ax=plt.axes([0, 0, .2, 1])
-    
+
     #Set colors
     frac_ax.set_facecolor('#d9f4c7')
     bar_ax.set_facecolor('#dbd3c9')
     row_ax.set_facecolor('#8cc7a1')
-    
+
     #Define first controls
     row_ax.text(0.1, .95, 'Colors')
     plus_ax = plt.axes([.13, .935, .025, .05])
@@ -47,16 +47,16 @@ class Artist_GUI(object):
     bplus = Button(plus_ax, '+', hovercolor='#8cc7a1')
     bcmap = Button(cm_ax, 'CM', hovercolor='#8cc7a1')
     bplot = Button(plot_ax, 'P', hovercolor='#8cc7a1')
-    
+
     # Define Color Bar
     color_map = cm.get_cmap('inferno')
     color_bar = np.linspace(1, 0, 256)
     color_bar = np.repeat(color_bar, 2).reshape(-1, 2)
     bar_ax.imshow(color_bar, aspect='auto', cmap=color_map)
-    
+
     # Define size for rows
     rec = [0, .8, .1, .1]
-    
+
     # List of buttons and text widget
     up_buttons = []
     down_buttons = []
@@ -222,7 +222,7 @@ class Artist_GUI(object):
 
 
 parser = argparse.ArgumentParser('Fractal Color Artist')
-parser.add_argument('--n', type=str, help='name of the fractsl file')
+parser.add_argument('--n', type=str, help='name of the fractals file')
 # parser.add_argument('--bool', action='store_true', help='This is a boolean')
 args = parser.parse_args()
 

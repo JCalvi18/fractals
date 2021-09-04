@@ -27,7 +27,7 @@ class Fractal(object):
         if not self.row_wise:
             self.M = self.M.T
 
-        if ctx.type == 'cuda':
+        if debug and ctx.type == 'cuda':
             print('Using %s' % torch.cuda.get_device_name(0))
 
 
