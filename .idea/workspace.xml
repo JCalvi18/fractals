@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5787aeed-5efe-41e7-9183-96397a5ebac5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/color.py" beforeDir="false" afterPath="$PROJECT_DIR$/color.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/core.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1dGvDshjPrbsNORIktUN6C8vqEP" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/color.py" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cairo" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.color">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="fractals" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.8" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cairo" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cairo/proto.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="automata" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="fractals" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.8" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cairo" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cairo/automata.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="color" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="fractals" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/../miniconda3/envs/torch/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/color.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.automata" />
+      <item itemvalue="Python.color" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5787aeed-5efe-41e7-9183-96397a5ebac5" name="Default Changelist" comment="" />
+      <created>1592064127712</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592064127712</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="requirements.txt" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="701" y="349" width="498" height="265" key="#Updates" timestamp="1597274376291">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="701" y="349" width="498" height="265" key="#Updates/0.0.1920.1080@0.0.1920.1080" timestamp="1597274376291" />
+    <state x="318" y="13" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603561000931">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="318" y="13" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080@0.0.1920.1080" timestamp="1603561000931" />
+    <state x="727" y="8" width="426" height="506" key="FileChooserDialogImpl" timestamp="1603560906516">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="727" y="8" width="426" height="506" key="FileChooserDialogImpl/0.0.1920.1080@0.0.1920.1080" timestamp="1603560906516" />
+    <state width="1897" height="360" key="GridCell.Tab.0.bottom" timestamp="1603565420498">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1897" height="360" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1603565420498" />
+    <state width="1897" height="360" key="GridCell.Tab.0.center" timestamp="1603565420497">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1897" height="360" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1603565420497" />
+    <state width="1897" height="360" key="GridCell.Tab.0.left" timestamp="1603565420497">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1897" height="360" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1603565420497" />
+    <state width="1897" height="360" key="GridCell.Tab.0.right" timestamp="1603565420497">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1897" height="360" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1603565420497" />
+    <state width="1897" height="360" key="GridCell.Tab.1.bottom" timestamp="1603565420498">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1897" height="360" key="GridCell.Tab.1.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1603565420498" />
+    <state width="1897" height="360" key="GridCell.Tab.1.center" timestamp="1603565420498">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1897" height="360" key="GridCell.Tab.1.center/0.0.1920.1080@0.0.1920.1080" timestamp="1603565420498" />
+    <state width="1897" height="360" key="GridCell.Tab.1.left" timestamp="1603565420498">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1897" height="360" key="GridCell.Tab.1.left/0.0.1920.1080@0.0.1920.1080" timestamp="1603565420498" />
+    <state width="1897" height="360" key="GridCell.Tab.1.right" timestamp="1603565420498">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1897" height="360" key="GridCell.Tab.1.right/0.0.1920.1080@0.0.1920.1080" timestamp="1603565420498" />
+    <state x="454" y="101" key="SettingsEditor" timestamp="1603309593109">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="454" y="101" key="SettingsEditor/0.0.1920.1080@0.0.1920.1080" timestamp="1603309593109" />
+    <state x="688" y="248" width="540" height="524" key="StructurePopup" timestamp="1597875546183">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="688" y="248" width="540" height="524" key="StructurePopup/0.0.1920.1080@0.0.1920.1080" timestamp="1597875546183" />
+    <state x="623" y="213" width="672" height="678" key="search.everywhere.popup" timestamp="1603311954658">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="623" y="213" width="672" height="678" key="search.everywhere.popup/0.0.1920.1080@0.0.1920.1080" timestamp="1603311954658" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/color.py</url>
+          <line>216</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="cdit" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
