@@ -140,7 +140,7 @@ class Sierpinski(Gtk.Window):
         tx = (sc-1)/(sc*2)
         cr.translate(-tx, 0)
 
-        self.background(cr)
+        # self.background(cr)
         # triangle
         p = [0.0, 1.0]
         for r0, r1 in self.reverse_line():  # iterate thought rows
