@@ -1,10 +1,10 @@
+# pylint: disable=missing-module-docstring
 import cairo
 import argparse
 import cv2
 import numpy as np
-import gi
+import gtk_init
 from tqdm import tqdm
-gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, GLib
 
 
@@ -13,7 +13,8 @@ def hex2rgb(h):
     return [x/255 for x in v]
 
 
-colors = ['0e3b43', '2a8a33', '3F00FF', '0165a9', 'f0a202', '00a9a5', '1c448e', 'FFFFFF']
+colors = ['0e3b43', '2a8a33', '3F00FF', '0165a9',
+          'f0a202', '00a9a5', '1c448e', 'FFFFFF']
 colors = [hex2rgb(h) for h in colors]
 
 
@@ -38,7 +39,8 @@ class Sierpinski(Gtk.Window):
                 self.lw_gen = self.geo_gen(self.lw, 1e-5, frames)
                 self.al_gen = self.geo_gen(self.al, 0.8, frames)
         else:
-            self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+            self.surface = cairo.ImageSurface(
+                cairo.FORMAT_ARGB32, width, height)
             cr = cairo.Context(self.surface)
             if animate:
                 self.animate(cr)
@@ -86,7 +88,7 @@ class Sierpinski(Gtk.Window):
         self.add(darea)
         self.darea = darea
 
-        self.set_title("GTK window")
+        self.set_title("GTK Cairo")
         self.resize(self.width, self.height)
         self.set_position(Gtk.WindowPosition.CENTER)
         self.connect("delete-event", Gtk.main_quit)
@@ -166,7 +168,8 @@ class Sierpinski(Gtk.Window):
             return False
 
     def animate(self, cr: cairo.Context, fps=30):
-        out = cv2.VideoWriter('sp.mp4', cv2.VideoWriter_fourcc(*'mp4v'), fps, (self.width, self.height))
+        out = cv2.VideoWriter('sp.mp4', cv2.VideoWriter_fourcc(
+            *'mp4v'), fps, (self.width, self.height))
         scales = np.geomspace(self.sc, 1, self.frames)
         line_w = np.geomspace(self.lw, 1e-5, self.frames)
         alpha = np.geomspace(self.al, 0.8, self.frames)
@@ -175,7 +178,8 @@ class Sierpinski(Gtk.Window):
             self.on_draw(None, cr, sc=s, lw=lw, al=a)
             cr.show_page()
             buf = self.surface.get_data()
-            render = np.ndarray(shape=(self.width, self.height, 4), dtype=np.uint8, buffer=buf)
+            render = np.ndarray(
+                shape=(self.width, self.height, 4), dtype=np.uint8, buffer=buf)
             render = cv2.cvtColor(render, cv2.COLOR_RGBA2RGB)
             out.write(render)
         for _ in range(150):
@@ -186,15 +190,18 @@ class Sierpinski(Gtk.Window):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser('Sierpinski generator')
     parser.add_argument('l', type=int, default=1, help='Level of the triangle')
-    parser.add_argument('--w', type=int, default=500, help='Level of the triangle')
-    parser.add_argument('--h', type=int, default=500, help='Level of the triangle')
+    parser.add_argument('--w', type=int, default=500,
+                        help='Level of the triangle')
+    parser.add_argument('--h', type=int, default=500,
+                        help='Level of the triangle')
     parser.add_argument('--s', type=int, default=1, help='Initial Scale')
     parser.add_argument('--fr', type=int, default=100, help='Number of frames')
     parser.add_argument('--gtk', action='store_true', help='Use GTK window')
     parser.add_argument('--an', action='store_true', help='Animate')
 
     args = parser.parse_args()
-    app = Sierpinski(args.w, args.h, args.l, args.s, args.gtk, args.an, args.fr)
+    app = Sierpinski(args.w, args.h, args.l, args.s,
+                     args.gtk, args.an, args.fr)
     if args.gtk:
         if args.an:
             GLib.timeout_add(100, app.gtk_move)
