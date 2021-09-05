@@ -1,6 +1,7 @@
 # pylint: disable=missing-module-docstring
-import cairo
+# pylint: disable=no-member
 import argparse
+import cairo
 import cv2
 import numpy as np
 import gtk_init
@@ -39,6 +40,7 @@ class Sierpinski(Gtk.Window):
                 self.lw_gen = self.geo_gen(self.lw, 1e-5, frames)
                 self.al_gen = self.geo_gen(self.al, 0.8, frames)
         else:
+
             self.surface = cairo.ImageSurface(
                 cairo.FORMAT_ARGB32, width, height)
             cr = cairo.Context(self.surface)
