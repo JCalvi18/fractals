@@ -30,7 +30,8 @@ class Sierpinski(Gtk.Window):
         self.triangle = self.s_triangle(level)
         self.dx = 1.0 / (2 ** level)
         self.dy = 1.0 / (2 ** (level - 1))
-        self.lw = 0.0005
+        # self.lw = 0.0005
+        self.lw = 0.003
         self.al = 1.0
         if gtk:
             super(Sierpinski, self).__init__()
@@ -41,16 +42,20 @@ class Sierpinski(Gtk.Window):
                 self.al_gen = self.geo_gen(self.al, 0.8, frames)
         else:
 
-            self.surface = cairo.ImageSurface(
-                cairo.FORMAT_ARGB32, width, height)
-            cr = cairo.Context(self.surface)
-            if animate:
-                self.animate(cr)
-            else:
+            # self.surface = cairo.ImageSurface(
+            #     cairo.FORMAT_ARGB32, width, height)
+            # cr = cairo.Context(self.surface)
+            # if animate:
+            #     self.animate(cr)
+            # else:
+            #     self.on_draw(None, cr)
+            #     # self.surface.write_to_png('image.png')
+            #     self.surface.w
+            #     cr.show_page()
+            # self.surface.finish()
+            with cairo.SVGSurface("sierpinski.svg", 200, 200) as surface:
+                cr = cairo.Context(surface)
                 self.on_draw(None, cr)
-                self.surface.write_to_png('image.png')
-                cr.show_page()
-            self.surface.finish()
 
     def geo_gen(self, start, stop, n):
         for i in np.geomspace(start, stop, n):
@@ -140,6 +145,10 @@ class Sierpinski(Gtk.Window):
         tx = (sc-1)/(sc*2)
         cr.translate(-tx, 0)
 
+        cr.rectangle(-1, -1, 3, 2)
+        cr.set_source_rgb(*colors[-1])
+        cr.fill()
+
         # self.background(cr)
         # triangle
         p = [0.0, 1.0]
@@ -156,8 +165,9 @@ class Sierpinski(Gtk.Window):
         cr.set_line_width(lw)
         cr.set_source_rgb(0, 0, 0)
         cr.stroke_preserve()
-        cr.set_source_rgba(*colors[4], al)
-        cr.fill()
+        # cr.set_source_rgba(*colors[4], al)
+        # cr.set_source_rgba('000000', al)
+        # cr.fill()
 
     def gtk_move(self):
         self.darea.queue_draw()
@@ -193,9 +203,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser('Sierpinski generator')
     parser.add_argument('l', type=int, default=1, help='Level of the triangle')
     parser.add_argument('--w', type=int, default=500,
-                        help='Level of the triangle')
+                        help='Window width')
     parser.add_argument('--h', type=int, default=500,
-                        help='Level of the triangle')
+                        help='Window height')
     parser.add_argument('--s', type=int, default=1, help='Initial Scale')
     parser.add_argument('--fr', type=int, default=100, help='Number of frames')
     parser.add_argument('--gtk', action='store_true', help='Use GTK window')

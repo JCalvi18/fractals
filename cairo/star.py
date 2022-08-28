@@ -1,3 +1,4 @@
+from gi.repository import Gtk, GLib
 import cairo
 import argparse
 import cv2
@@ -5,7 +6,6 @@ import numpy as np
 import gi
 from tqdm import tqdm
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, GLib
 
 
 def hex2rgb(h):
@@ -14,7 +14,8 @@ def hex2rgb(h):
 
 
 # colors = ['102542', '398941', '3F00FF', '0165a9', 'f0a202', 'EC630E', '422310', 'FFFFFF']
-colors = ['102542', '31588F', '3F00FF', '0165a9', 'EDA10E', 'ee3037', '006AFF', 'FFFFFF']
+colors = ['102542', '31588F', '3F00FF', '0165a9',
+          'EDA10E', 'ee3037', '006AFF', 'FFFFFF']
 colors = [hex2rgb(h) for h in colors]
 
 
@@ -31,7 +32,8 @@ class Star(Gtk.Window):
             if animate:
                 self.gen_r = self.linspace(self.d, 1.2, self.frames)
         else:
-            self.surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+            self.surface = cairo.ImageSurface(
+                cairo.FORMAT_ARGB32, width, height)
             cr = cairo.Context(self.surface)
             if animate:
                 self.animate(cr)
@@ -56,7 +58,7 @@ class Star(Gtk.Window):
         self.add(darea)
         self.darea = darea
 
-        self.set_title("GTK window")
+        self.set_title("GTK Cairo")
         self.resize(self.width, self.height)
         self.set_position(Gtk.WindowPosition.CENTER)
         self.connect("delete-event", Gtk.main_quit)
@@ -92,14 +94,15 @@ class Star(Gtk.Window):
         # t = self.theta
         th = np.linspace(0, theta, n)
         for t in th:
-            ph = ((R-r)*np.cos(t)+d*np.cos((R-r)*t/r), (R-r)*np.sin(t)-d*np.sin((R-r)*t/r))
+            ph = ((R-r)*np.cos(t)+d*np.cos((R-r)*t/r),
+                  (R-r)*np.sin(t)-d*np.sin((R-r)*t/r))
             if t == 0:
                 cr.move_to(*ph)
                 continue
             cr.line_to(*ph)
-        cr.set_source_rgba(*colors[c[0]],alpha)
+        cr.set_source_rgba(*colors[c[0]], alpha)
         cr.fill_preserve()
-        cr.set_source_rgba(*colors[c[1]],alpha)
+        cr.set_source_rgba(*colors[c[1]], alpha)
         cr.stroke()
 
     def hypo_scale(self, cr: cairo.Context, a, b, d=None):
@@ -107,7 +110,8 @@ class Star(Gtk.Window):
             f = self.d * a - b
         else:
             f = d * a - b
-        mat = cairo.Matrix(self.width * f, 0, 0, -self.height * f, self.width / 2, self.height / 2)
+        mat = cairo.Matrix(self.width * f, 0, 0, -self.height *
+                           f, self.width / 2, self.height / 2)
         cr.set_matrix(mat)
 
     def on_draw(self, wd, cr: cairo.Context, d_an=None):
@@ -115,7 +119,8 @@ class Star(Gtk.Window):
         # cr.scale(self.width*sc, self.height*sc)
         # tx = (sc-1)/(sc*2)
         # mat = cairo.Matrix(1, 0, 0, 1, .5*(1-self.width), .5*(self.height-1))
-        mat = cairo.Matrix(self.width, 0, 0, -self.height, self.width/2, self.height/2)
+        mat = cairo.Matrix(self.width, 0, 0, -self.height,
+                           self.width/2, self.height/2)
         cr.set_matrix(mat)
         # cr.scale(self.width, self.height)
         # cr.translate(.5, .5)
@@ -141,26 +146,30 @@ class Star(Gtk.Window):
             if d_an is None:
                 self.hypo_scale(cr, 1.9, .21)
             else:
-                self.hypo_scale(cr, 1.9, .21,d)
-            self.hypotrochoid(cr, .005, .2, d - .25, theta=2 * np.pi, n=1000, c=(1, 5))
+                self.hypo_scale(cr, 1.9, .21, d)
+            self.hypotrochoid(cr, .005, .2, d - .25,
+                              theta=2 * np.pi, n=1000, c=(1, 5))
         elif d >= .8:
             self.hypo_scale(cr, 1.9, .21, .8)
             a = self.line(d, 0.8, 1.2, 1, 0)
-            self.hypotrochoid(cr, .005, .2, .8 - .25, theta=2 * np.pi, n=1000, c=(1, 5), alpha=a)
+            self.hypotrochoid(cr, .005, .2, .8 - .25, theta=2 *
+                              np.pi, n=1000, c=(1, 5), alpha=a)
 
         if .459 < d < .8:
             cr.set_line_width(.2e-2)
             if d_an is None:
                 self.hypo_scale(cr, 3.2921, 1.53)
             else:
-                self.hypo_scale(cr, 3.2921, 1.53,d)
-            self.hypotrochoid(cr, .005, .2, .2-d/6.3015, theta=2 * np.pi, n=1000, c=(0, 4))
+                self.hypo_scale(cr, 3.2921, 1.53, d)
+            self.hypotrochoid(cr, .005, .2, .2-d/6.3015,
+                              theta=2 * np.pi, n=1000, c=(0, 4))
             # self.hypotrochoid(cr, .005, .2, .2 + 8e-4 + d / 1000, theta=4 * np.pi, n=2000, c=(0, 4))
         elif d >= .8:
             cr.set_line_width(self.line(d, 0.8, 1.2, .2e-2, 0.5e-2))
             self.hypo_scale(cr, 3.2921, 1.53, .8)
             # self.hypotrochoid(cr, .005+8e-4+d/1000, .2, .2, theta=4 * np.pi, n=2000, c=(0, 4))
-            self.hypotrochoid(cr, .005, .2, .2-d/6.3015, theta=2 * np.pi, n=1000, c=(0, 4))
+            self.hypotrochoid(cr, .005, .2, .2-d/6.3015,
+                              theta=2 * np.pi, n=1000, c=(0, 4))
 
     def gtk_move(self):
         self.darea.queue_draw()
@@ -171,21 +180,26 @@ class Star(Gtk.Window):
             return False
 
     def animate(self, cr: cairo.Context, fps=30):
-        out = cv2.VideoWriter('media/star.mp4', cv2.VideoWriter_fourcc(*'mp4v'), fps, (self.width, self.height))
+        out = cv2.VideoWriter(
+            'media/star.mp4', cv2.VideoWriter_fourcc(*'mp4v'), fps, (self.width, self.height))
         dan = np.linspace(self.d, 1.2, self.frames)
         for d in tqdm(dan):
             self.on_draw(None, cr, d_an=d)
             cr.show_page()
             buf = self.surface.get_data()
-            render = np.ndarray(shape=(self.width, self.height, 4), dtype=np.uint8, buffer=buf)
+            render = np.ndarray(
+                shape=(self.width, self.height, 4), dtype=np.uint8, buffer=buf)
             render = cv2.cvtColor(render, cv2.COLOR_RGBA2RGB)
             out.write(render)
         out.release()
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser('Hypotrochoid animator')
-    parser.add_argument('--w', type=int, default=500, help='Level of the triangle')
-    parser.add_argument('--h', type=int, default=500, help='Level of the triangle')
+    parser.add_argument('--w', type=int, default=500,
+                        help='Level of the triangle')
+    parser.add_argument('--h', type=int, default=500,
+                        help='Level of the triangle')
     parser.add_argument('--s', type=int, default=1, help='Initial Scale')
     parser.add_argument('--fr', type=int, default=300, help='Number of frames')
     parser.add_argument('--gtk', action='store_true', help='Use GTK window')
