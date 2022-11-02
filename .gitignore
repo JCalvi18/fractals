@@ -2,4 +2,5 @@
 *.svg
 *.mp4
 .vscode/
+.idea/*
 .pylintrc
