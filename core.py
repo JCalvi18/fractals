@@ -188,6 +188,21 @@ def mandelbrot(c, nrep):
         return M
 
 
+def julia(c):
+    def constrained_julia(z, nrep):
+        M = torch.zeros(z.shape, dtype=torch.int16, device=ctx)
+        for _ in range(nrep):
+            z = z**2+c
+            if all(z.abs() >= 2):
+                break
+            M += z.abs() < 2
+
+        if ctx.type == 'cuda':
+            return M.cpu()
+        else:
+            return M
+    return constrained_julia
+
 def event_handler(event, frac):
     if frac.event_update(event):
         frac.gen(mandelbrot, chunk_size=500)
