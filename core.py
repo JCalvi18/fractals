@@ -5,9 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import os
 
-
 from time import time
-
 
 def hex2rgb(h):
     v = tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
@@ -19,12 +17,12 @@ class Fractal(object):
         self.resolution = resolution
         self.point = point
         self.scale = scale
-        self.wh = [1.25*self.scale, 1*self.scale]
+        self.wh = [1*self.scale, 1*self.scale]
         self.nrep = nrep
         self.row_wise = row_wise
         self.debug = debug
         self.M = np.zeros(resolution, dtype=np.uint16)
-        if not self.row_wise:
+        if self.row_wise:
             self.M = self.M.T
 
         if debug and ctx.type == 'cuda':
@@ -76,7 +74,10 @@ class Fractal(object):
             if len(slices) > 1:
                 slices.reverse()
                 for j, s in zip(range((i+1)-chunk_size, i+1), slices):
-                    self.M[j] = out_stream[s]
+                    if self.row_wise:
+                        self.M[j] = out_stream [s]
+                    else:
+                        self.M[:, j] = out_stream[s]
             else:
                 self.M[i] = out_stream
             chunk_time = np.append(chunk_time, time()-start_chunk)
