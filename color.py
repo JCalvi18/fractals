@@ -6,6 +6,8 @@ from matplotlib import cm
 import pyperclip
 import argparse
 
+# export LD_PRELOAD=/usr/lib/libstdc++.so.6
+
 class Artist_GUI(object):
     params = {'font.size': 18,
      'toolbar':'None',
@@ -44,9 +46,13 @@ class Artist_GUI(object):
     plot_ax = plt.axes([.05, 0, .04, .05])
     plot_ax.set_facecolor('#8cc7a1')
 
+    exp_ax = plt.axes([.0, 0, .04, .05])
+    exp_ax.set_facecolor('#8cc7a1')
+
     bplus = Button(plus_ax, '+', hovercolor='#8cc7a1')
     bcmap = Button(cm_ax, 'CM', hovercolor='#8cc7a1')
     bplot = Button(plot_ax, 'P', hovercolor='#8cc7a1')
+    expB = Button(exp_ax, 'E', hovercolor = '#8cc7a1')
 
     # Define Color Bar
     color_map = cm.get_cmap('inferno')
@@ -70,7 +76,8 @@ class Artist_GUI(object):
     nrows = int(0)
 
     def __init__(self, name):
-        with np.load('try1.npz') as f:
+        self.name = name
+        with np.load(name) as f:
             if len(f.files) == 1:
                 self.M = f[f.files[0]]
             else:
@@ -78,6 +85,7 @@ class Artist_GUI(object):
         self.bplus.on_clicked(lambda event: self.add_button())
         self.bcmap.on_clicked(lambda event: self.gen_cm())
         self.bplot.on_clicked(lambda event: self.update_fr())
+        self.expB.on_clicked (lambda event: self.export_cm())
         self.update_fr()
 
     def move_text(self, idx, inverse=False):
@@ -220,6 +228,17 @@ class Artist_GUI(object):
     def update_fr(self):
         self.frac_ax.imshow(self.M, cmap=self.color_map, aspect='equal', interpolation='bilinear')
 
+    def export_cm(self):
+        name = self.name.split('.')[0]+'_cm'+'.npz'
+
+        colors = [ac.get_facecolor () for ac in reversed (self.axcolor)]
+        anchors = [ach for ach in reversed (self.col_anch)]
+        if not all (anchors [1:]) > 0:
+            return
+        cdic = {cname: [[x, colors [xi] [ci], colors [xi] [ci]] for xi, x in enumerate (anchors)] for ci, cname in
+                enumerate (['red', 'green', 'blue', 'alpha'])}
+
+        np.savez (name, **cdic)
 
 parser = argparse.ArgumentParser('Fractal Color Artist')
 parser.add_argument('--n', type=str, help='name of the fractals file')
